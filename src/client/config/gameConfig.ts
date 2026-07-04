@@ -1,0 +1,10 @@
+export const GAME_CONFIG = {
+  TILE_SIZE: 32,
+
+  WORLD_WIDTH: 50,
+  WORLD_HEIGHT: 50,
+
+  BACKGROUND_COLOR: '#1a1a1a',
+
+  GRID_COLOR: 0x404040,
+};

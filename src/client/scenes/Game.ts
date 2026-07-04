@@ -1,4 +1,6 @@
 import { Scene } from 'phaser';
+import { Grid } from '../world/Grid';
+import { GAME_CONFIG } from '../config/gameConfig';
 
 export class Game extends Scene {
 
@@ -7,19 +9,14 @@ export class Game extends Scene {
   }
 
   create() {
-  this.cameras.main.setBackgroundColor('#1a1a1a');
+  this.cameras.main.setBackgroundColor(GAME_CONFIG.BACKGROUND_COLOR);
 
-  this.add
-    .text(
-      this.scale.width / 2,
-      this.scale.height / 2,
-      'FORMYXX',
-      {
-        fontFamily: 'Arial',
-        fontSize: '64px',
-        color: '#ffffff',
-      }
-    )
-    .setOrigin(0.5);
+  const grid = new Grid(this);
+  grid.draw();
+
+  this.add.text(30, 30, 'FORMYXX', {
+    fontSize: '28px',
+    color: '#ffffff',
+  });
 }
 }
