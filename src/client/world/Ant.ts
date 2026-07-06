@@ -3,6 +3,7 @@ import { GAME_CONFIG } from '../config/gameConfig';
 
 export class Ant {
   private ant: Phaser.GameObjects.Rectangle;
+  private carryingFood = false;
 
   private tileX: number;
   private tileY: number;
@@ -56,4 +57,21 @@ export class Ant {
   getSprite() {
   return this.ant;
   }
+
+  isCarryingFood() {
+  return this.carryingFood;
+}
+
+pickUpFood() {
+  this.carryingFood = true;
+
+  this.ant.setFillStyle(0xffff00);
+}
+
+dropFood() {
+  this.carryingFood = false;
+
+  this.ant.setFillStyle(0xff4444);
+}
+
 }

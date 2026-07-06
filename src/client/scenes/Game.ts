@@ -52,18 +52,26 @@ export class Game extends Scene {
   if (this.cursors.left.isDown) {
     this.ant.move(-1, 0);
     this.world.checkFoodCollection();
+    
+    this.world.checkNestDelivery();
     moved = true;
   } else if (this.cursors.right.isDown) {
     this.ant.move(1, 0);
     this.world.checkFoodCollection();
+    
+    this.world.checkNestDelivery();
     moved = true;
   } else if (this.cursors.up.isDown) {
     this.ant.move(0, -1);
     this.world.checkFoodCollection();
+    
+    this.world.checkNestDelivery();
     moved = true;
   } else if (this.cursors.down.isDown) {
     this.ant.move(0, 1);
     this.world.checkFoodCollection();
+    
+    this.world.checkNestDelivery();
     moved = true;
   }
 
