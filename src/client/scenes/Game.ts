@@ -8,6 +8,9 @@ export class Game extends Scene {
   private ant!: Ant;
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
 
+  private moveDelay = 150; // milliseconds
+  private lastMoveTime = 0;
+
   constructor() {
     super('Game');
   }
@@ -18,7 +21,18 @@ export class Game extends Scene {
     const grid = new Grid(this);
     grid.draw();
 
+    this.cameras.main.setBounds(
+  0,
+  0,
+  GAME_CONFIG.WORLD_WIDTH * GAME_CONFIG.TILE_SIZE,
+  GAME_CONFIG.WORLD_HEIGHT * GAME_CONFIG.TILE_SIZE
+  );
+
     this.ant = new Ant(this, 5, 5);
+
+    this.cameras.main.startFollow(this.ant.getSprite(), true);
+
+    this.cameras.main.setZoom(1);
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -28,21 +42,29 @@ export class Game extends Scene {
     });
   }
 
-  update() {
-    if (Phaser.Input.Keyboard.JustDown(this.cursors.left!)) {
-      this.ant.move(-1, 0);
-    }
+  update(time: number) {
+  if (time - this.lastMoveTime < this.moveDelay) {
+    return;
+  }
 
-    if (Phaser.Input.Keyboard.JustDown(this.cursors.right!)) {
-      this.ant.move(1, 0);
-    }
+  let moved = false;
 
-    if (Phaser.Input.Keyboard.JustDown(this.cursors.up!)) {
-      this.ant.move(0, -1);
-    }
+  if (this.cursors.left.isDown) {
+    this.ant.move(-1, 0);
+    moved = true;
+  } else if (this.cursors.right.isDown) {
+    this.ant.move(1, 0);
+    moved = true;
+  } else if (this.cursors.up.isDown) {
+    this.ant.move(0, -1);
+    moved = true;
+  } else if (this.cursors.down.isDown) {
+    this.ant.move(0, 1);
+    moved = true;
+  }
 
-    if (Phaser.Input.Keyboard.JustDown(this.cursors.down!)) {
-      this.ant.move(0, 1);
-    }
+  if (moved) {
+    this.lastMoveTime = time;
+  }
   }
 }

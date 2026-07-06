@@ -20,18 +20,40 @@ export class Ant {
     );
   }
 
-  private getPixelX() {
+  private getPixelX(): number {
     return this.tileX * GAME_CONFIG.TILE_SIZE + GAME_CONFIG.TILE_SIZE / 2;
   }
 
-  private getPixelY() {
+  private getPixelY(): number {
     return this.tileY * GAME_CONFIG.TILE_SIZE + GAME_CONFIG.TILE_SIZE / 2;
   }
 
-  move(dx: number, dy: number) {
-    this.tileX += dx;
-    this.tileY += dy;
+  move(dx: number, dy: number): void {
+    const newX = this.tileX + dx;
+    const newY = this.tileY + dy;
+
+    if (
+      newX < 0 ||
+      newX >= GAME_CONFIG.WORLD_WIDTH ||
+      newY < 0 ||
+      newY >= GAME_CONFIG.WORLD_HEIGHT
+    ) {
+      return;
+    }
+
+    this.tileX = newX;
+    this.tileY = newY;
 
     this.ant.setPosition(this.getPixelX(), this.getPixelY());
+  }
+
+  getTilePosition() {
+    return {
+      x: this.tileX,
+      y: this.tileY,
+    };
+  }
+  getSprite() {
+  return this.ant;
   }
 }
