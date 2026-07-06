@@ -23,12 +23,16 @@ export class World {
 
     // Spawn Food
     for (let i = 0; i < 20; i++) {
-      const x = Phaser.Math.Between(0, GAME_CONFIG.WORLD_WIDTH - 1);
-      const y = Phaser.Math.Between(0, GAME_CONFIG.WORLD_HEIGHT - 1);
-
-      this.foods.push(new Food(scene, x, y));
+        this.spawnFood();
     }
   }
+
+  private spawnFood() {
+  const x = Phaser.Math.Between(0, GAME_CONFIG.WORLD_WIDTH - 1);
+  const y = Phaser.Math.Between(0, GAME_CONFIG.WORLD_HEIGHT - 1);
+
+  this.foods.push(new Food(this.scene, x, y));
+    }
 
   checkFoodCollection() {
     const antPos = this.ant.getTilePosition();
@@ -42,6 +46,8 @@ export class World {
         this.hud.addFood();
 
         this.foods.splice(i, 1);
+
+        this.spawnFood();
 
         console.log('Food collected!');
       }
